@@ -3,5 +3,28 @@
   <%= @question.body %>
 </p>
 
+<p>
+  <strong>Answers:</strong>
+</p>
+
+<%= form_with(model: [@question, @answer], local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :answer %>
+    <%= f.text_area :answer, class: "form-control" %>
+  </div>
+    <%= f.submit class: "btn btn-primary"%>
+  </p>
+<% end %>
+
+<% @answers.each do |answer| %>
+  <div class="card">
+    <div class="card-body">
+      <%= answer.answer %>
+      <%= link_to 'Edit', edit_answer_path(answer) %>
+      <%= link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }%>
+    </div>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
+<%= link_to 'Back', test_path(@question.test) %>

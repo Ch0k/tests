@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :answers
-  resources :questions
-  resources :tests
+  resources :tests do 
+    resources :questions, shallow: true do
+      resources :answers, shallow: true
+    end
+  end
   resources :categories
   resources :users, only: [:index]
   #root to: "categories@index"
-  root 'categories#index'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'tests#index'
 end

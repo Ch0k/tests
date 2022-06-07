@@ -8,6 +8,8 @@ class TestsController < ApplicationController
 
   # GET /tests/1 or /tests/1.json
   def show
+    @questions = @test.questions
+    @question = Question.new
   end
 
   # GET /tests/new
@@ -65,6 +67,6 @@ class TestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def test_params
-      params.require(:test).permit(:title)
+      params.require(:test).permit(:title, :category_id)
     end
 end

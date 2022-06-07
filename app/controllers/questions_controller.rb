@@ -1,18 +1,11 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: %i[ show edit update destroy ]
-
-  # GET /questions or /questions.json
-  def index
-    @questions = Question.all
-  end
+  before_action :set_test, only: %i[create]
 
   # GET /questions/1 or /questions/1.json
   def show
-  end
-
-  # GET /questions/new
-  def new
-    @question = Question.new
+    @answers = @question.answers
+    @answer = Answer.new
   end
 
   # GET /questions/1/edit
@@ -21,11 +14,11 @@ class QuestionsController < ApplicationController
 
   # POST /questions or /questions.json
   def create
-    @question = Question.new(question_params)
-
+    @test = Test.find(params[:test_id])
+    @question = @test.questions.new(question_params)
     respond_to do |format|
       if @question.save
-        format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
+        format.html { redirect_to question_path(@question), notice: "Question was successfully created." }
         format.json { render :show, status: :created, location: @question }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,7 +45,7 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: "Question was successfully destroyed." }
+      format.html { redirect_to test_path(@question.test), notice: "Question was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -61,6 +54,10 @@ class QuestionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_question
       @question = Question.find(params[:id])
+    end
+
+    def set_test
+      @test = Test.find(params[:test_id])
     end
 
     # Only allow a list of trusted parameters through.
