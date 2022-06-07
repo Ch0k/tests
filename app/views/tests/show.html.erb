@@ -3,6 +3,17 @@
   <%= @test.title %>
 </p>
 
+<p>
+  <strong>Category:</strong>
+  <%= @test.category.title %>
+</p>
+
+<p>
+  <strong>level:</strong>
+  <%= @test.level %>
+</p>
+
+
 <%= link_to 'Edit', edit_test_path(@test) %> |
 <%= link_to 'Back', tests_path %>
 
@@ -20,7 +31,7 @@
 <% end %>
 
 <% @questions.each do |question| %>
-  <div class="card">
+  <div class="card my-2">
     <div class="card-body">
       <%= question.body %>
       <%= link_to 'Show', question_path(question) %>

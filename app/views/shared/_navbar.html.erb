@@ -20,7 +20,7 @@
         </ul>
         <form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-outline-success my-2" type="submit">Search</button>
         </form>
         <% if current_user.present? %>
         <li class="nav-item dropdown show">
@@ -31,8 +31,8 @@
           </div>
         </li>
         <% else %>
-          <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-primary" %>
-          <%= link_to 'Sign in', new_user_session_path ,class: "btn btn-primary"%>
+          <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-primary mx-2" %>
+          <%= link_to 'Sign in', new_user_session_path ,class: "btn btn-primary mx-2"%>
         <% end %>
       </div>
     </nav>
