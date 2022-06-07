@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :tests
   resources :categories
+  resources :users, only: [:index]
   #root to: "categories@index"
   root 'categories#index'
 
