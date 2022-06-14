@@ -1,24 +1,13 @@
-# README
+docker build -t helloapp:v1 .
+​​docker​​ ​ build​​ ​ -t​​ ​ helloapp ​ -t​​ ​ helloapp:1.0​​ ​ .
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+docker​​ ​ images
 
-Things you may want to cover:
+​docker​​ ​ run​​ ​ -p​​ ​ 3000:3000​​ ​ a1df0eddba18​​ ​ \
+bin/rails​​ ​ s ​ ​ -b​​ ​ 0.0.0.0
 
-* Ruby version
+​docker​​ ​ run​​ ​ -p​​ ​ 3000:3000​​ ​ helloapp
+docker​​ ​ run​​ ​ --rm​​ ​ helloapp ​ bin/rails​​ ​ -T
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+docker-compose​​ ​ up
+​docker-compose​​ ​ up​​ ​ -d
