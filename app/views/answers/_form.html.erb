@@ -16,6 +16,13 @@
     <%= form.text_field :answer, class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <div class="form-check">
+      <%= form.check_box :correct, class: "form-check-input" %>
+      <%= form.label :correct, class: "form-check-label"%>
+    </div>
+  </div>
+
   <div class="actions">
     <%= form.submit class: "btn btn-primary" %>
   </div>

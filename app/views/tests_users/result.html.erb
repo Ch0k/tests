@@ -1,0 +1,12 @@
+<div>
+  <% if @tests_users.passed? %>
+    <p>Test was complited !</p>
+    <p>Your result > 85% </p>
+  <% else %>
+    <p>Test was not complited !</p>
+    <p>Your result < 85% </p>
+  <% end %>
+  <p>Correct answers <%= @tests_users.correct_question %> of <%= @tests_users.test.questions.count %>!
+  <br>
+  <%= link_to 'Tests', tests_path, class: "btn btn_primary" %>
+</div>

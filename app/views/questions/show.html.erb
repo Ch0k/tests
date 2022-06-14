@@ -12,12 +12,19 @@
     <%= f.label :answer %>
     <%= f.text_area :answer, class: "form-control" %>
   </div>
-    <%= f.submit class: "btn btn-primary"%>
-  </p>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :correct, class: "form-check-input" %>
+      <%= f.label :correct, class: "form-check-label"%>
+    </div>
+  </div>
+
+  <%= f.submit class: "btn btn-primary"%>
 <% end %>
 
 <% @answers.each do |answer| %>
-  <div class="card">
+  <div class="card my-2">
     <div class="card-body">
       <%= answer.answer %>
       <%= link_to 'Edit', edit_answer_path(answer) %>

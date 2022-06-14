@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class TestsController < ApplicationController
-  before_action :set_test, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_test, only: %i[show edit update destroy start]
 
   # GET /tests or /tests.json
   def index
@@ -18,8 +21,7 @@ class TestsController < ApplicationController
   end
 
   # GET /tests/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /tests or /tests.json
   def create
@@ -27,7 +29,7 @@ class TestsController < ApplicationController
 
     respond_to do |format|
       if @test.save
-        format.html { redirect_to test_url(@test), notice: "Test was successfully created." }
+        format.html { redirect_to test_url(@test), notice: 'Test was successfully created.' }
         format.json { render :show, status: :created, location: @test }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +42,7 @@ class TestsController < ApplicationController
   def update
     respond_to do |format|
       if @test.update(test_params)
-        format.html { redirect_to test_url(@test), notice: "Test was successfully updated." }
+        format.html { redirect_to test_url(@test), notice: 'Test was successfully updated.' }
         format.json { render :show, status: :ok, location: @test }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,19 +56,29 @@ class TestsController < ApplicationController
     @test.destroy
 
     respond_to do |format|
-      format.html { redirect_to tests_url, notice: "Test was successfully destroyed." }
+      format.html { redirect_to tests_url, notice: 'Test was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_test
-      @test = Test.find(params[:id])
+  def start
+    if @test.questions.present?
+      current_user.tests.push(@test)
+      redirect_to current_user.tests_user(@test)
+    else
+      redirect_to root_path, notice: 'Тест не возможно начать. У теста нет вопросов'
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def test_params
-      params.require(:test).permit(:title, :category_id, :level)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_test
+    @test = Test.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def test_params
+    params.require(:test).permit(:title, :category_id, :level)
+  end
 end

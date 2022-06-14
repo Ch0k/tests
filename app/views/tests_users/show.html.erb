@@ -1,0 +1,16 @@
+<div class="card">
+  <h5 class="card-header">Test: <%= @tests_users.test.title %> </h5>
+  <div class="card-body">
+    <h5 class="card-title">Question number is <%= @tests_users.question_number %> of <%= @tests_users.test.questions.count %></h5>
+    <h5 class="card-title"><%= @tests_users.current_question.body %></h5>
+      <%= form_with url: tests_user_path(@tests_users), local: true, method: :put do |f| %>
+        <%= f.collection_check_boxes :answer_ids, @tests_users.current_question.answers, :id, :answer, include_hidden: false do |b| %>
+          <p>
+            <%= b.check_box id: "answers_ids_#{b.object.id}" %>
+            <%= b.label %>
+          </p>
+        <% end %>
+        <%= f.submit 'Next', class: 'btn btn-primary' %>
+      <% end %>
+  </div>
+</div>
