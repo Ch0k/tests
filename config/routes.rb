@@ -15,6 +15,6 @@ Rails.application.routes.draw do
     end
   end
   resources :categories
-  resources :users, only: [:index]
+  resources :users, only: [:index, :edit, :update]
   root 'tests#index'
 end
