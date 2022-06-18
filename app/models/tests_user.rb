@@ -20,13 +20,13 @@ class TestsUser < ApplicationRecord
   end
 
   def question_number
-    test.questions.index{|x| x.body == self.current_question.body } + 1
+    test.questions.index { |x| x.body == current_question.body } + 1
   end
 
   def passed?
     success_rate >= GOOD_RESULT_PROCENT
   end
-  
+
   private
 
   def before_validation_set_first_question
@@ -48,7 +48,6 @@ class TestsUser < ApplicationRecord
     self.test.questions.order(:id).where('id > ?', current_question.id).first
   end
 
-
   def success_rate
     correct_questions_multiply_by_100 / test_questions_count
   end
@@ -60,5 +59,4 @@ class TestsUser < ApplicationRecord
   def test_questions_count
     test.questions.count
   end
-
 end

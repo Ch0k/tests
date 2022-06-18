@@ -1,32 +1,29 @@
 # frozen_string_literal: true
 
 class TestsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[new start edit show update destroy create]
   before_action :set_test, only: %i[show edit update destroy start]
+  
+  authorize_resource
 
-  # GET /tests or /tests.json
   def index
     @tests = Test.all
   end
 
-  # GET /tests/1 or /tests/1.json
   def show
     @questions = @test.questions
     @question = Question.new
   end
 
-  # GET /tests/new
   def new
     @test = Test.new
   end
 
-  # GET /tests/1/edit
   def edit; end
 
-  # POST /tests or /tests.json
   def create
     @test = Test.new(test_params)
-
+    user = current_user
     respond_to do |format|
       if @test.save
         format.html { redirect_to test_url(@test), notice: 'Test was successfully created.' }
@@ -35,10 +32,10 @@ class TestsController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @test.errors, status: :unprocessable_entity }
       end
+    user.add_role :author, @test
     end
   end
 
-  # PATCH/PUT /tests/1 or /tests/1.json
   def update
     respond_to do |format|
       if @test.update(test_params)
@@ -51,7 +48,6 @@ class TestsController < ApplicationController
     end
   end
 
-  # DELETE /tests/1 or /tests/1.json
   def destroy
     @test.destroy
 
@@ -72,12 +68,10 @@ class TestsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_test
     @test = Test.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def test_params
     params.require(:test).permit(:title, :category_id, :level)
   end

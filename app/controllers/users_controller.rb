@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: %i[edit update]
+  authorize_resource
 
   def index
     @users = User.all
@@ -11,7 +13,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    #authorize! :update, @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }

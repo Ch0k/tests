@@ -6,6 +6,7 @@
       <th>Title</th>
       <th>Category</th>
       <th>Level</th>
+      <th>Author</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -16,10 +17,14 @@
         <td><%= test.title %></td>
         <td><%= test.category.title %></td>
         <td><%= test.level %></td>
+        <td><%= User.with_role(:author, test).pluck(:email) %></td>
         <td><%= button_to 'Start', start_test_path(test), class: 'btn btn-primary' %>
-        <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%# if user && user.has_role?(:reader)%>
+        <% if user_signed_in? %>
+          <td><%= link_to 'Show', test %></td>
+          <td><%= link_to 'Edit', edit_test_path(test) %></td>
+          <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

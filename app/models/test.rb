@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Test < ApplicationRecord
+  resourcify
   has_many :questions, dependent: :destroy
   belongs_to :category
   has_many :tests_users, dependent: :destroy

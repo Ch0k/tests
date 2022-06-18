@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
+  resourcify
   belongs_to :question
   validates :answer, presence: true
   validate :validate_answer_count, on: :create

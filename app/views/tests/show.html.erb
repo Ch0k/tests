@@ -14,6 +14,12 @@
 </p>
 
 
+<p>
+  <strong>author:</strong>
+  <%= User.with_role(:author, @test).pluck(:email) %>
+</p>
+
+
 <%= link_to 'Edit', edit_test_path(@test) %> |
 <%= link_to 'Back', tests_path %>
 
