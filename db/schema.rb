@@ -106,14 +106,6 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-<<<<<<< HEAD
-  add_foreign_key "answers", "questions"
-  add_foreign_key "questions", "tests"
-  add_foreign_key "tests", "categories"
-  add_foreign_key "tests_users", "questions", column: "current_question_id"
-  add_foreign_key "tests_users", "tests"
-  add_foreign_key "tests_users", "users"
-=======
   create_table "votes", force: :cascade do |t|
     t.string "votable_type"
     t.integer "votable_id"
@@ -127,6 +119,12 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
+  
+  add_foreign_key "answers", "questions"
+  add_foreign_key "questions", "tests"
+  add_foreign_key "tests", "categories"
+  add_foreign_key "tests_users", "questions", column: "current_question_id"
+  add_foreign_key "tests_users", "tests"
+  add_foreign_key "tests_users", "users"
 
->>>>>>> add model comment and migration
 end

@@ -1,0 +1,3 @@
+document.getElementById("upvote-<%= @test.id %>").innerHTML = "<%= j render "tests/upvote_link.html.erb", test: @test %>";
+document.getElementById("downvote-<%= @test.id %>").innerHTML = "<%= j render "tests/downvote_link.html.erb", test: @test %>";
+document.getElementById("votes-score-<%= @test.id %>").innerHTML = "<%= j render "tests/votes_score.html.erb", test: @test %>";
