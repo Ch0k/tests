@@ -3,22 +3,20 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: %i[show edit update destroy]
 
-  # GET /answers/1 or /answers/1.json
+  authorize_resource
+
   def show; end
 
-  # GET /answers/new
   def new
     @answer = Answer.new
   end
 
-  # GET /answers/1/edit
   def edit; end
 
-  # POST /answers or /answers.json
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
-
+    user = current_user
     respond_to do |format|
       if @answer.save
         format.html { redirect_to question_path(@answer.question), notice: 'Answer was successfully created.' }
@@ -28,9 +26,9 @@ class AnswersController < ApplicationController
         format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
     end
+    user.add_role :author, @answer
   end
 
-  # PATCH/PUT /answers/1 or /answers/1.json
   def update
     respond_to do |format|
       if @answer.update(answer_params)
@@ -43,7 +41,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  # DELETE /answers/1 or /answers/1.json
   def destroy
     @answer.destroy
 
@@ -55,12 +52,10 @@ class AnswersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_answer
     @answer = Answer.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def answer_params
     params.require(:answer).permit(:answer, :correct)
   end

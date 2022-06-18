@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Test < ApplicationRecord
+  resourcify
   has_many :questions, dependent: :destroy
   belongs_to :category
   has_many :tests_users, dependent: :destroy
@@ -15,4 +16,5 @@ class Test < ApplicationRecord
   scope :list_category, lambda { |category|
                           joins('JOIN categories ON tests.category_id = categories.id').where('categories.title = ? ', category)
                         }
+  scope :author, ->(user) { with_role(:author, user).pluck(:id) }
 end

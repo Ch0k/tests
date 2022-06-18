@@ -1,0 +1,20 @@
+<h1>Users</h1>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>email</th>
+      <th>roles</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.email %></td>
+    <td><%= user.roles.pluck(:name) %> 
+    <td><%= link_to 'Edit', edit_user_path(user) %> 
+  </tr>
+<% end %>
