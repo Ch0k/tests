@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TestsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new start edit show update destroy create]
+  before_action :authenticate_user!, only: %i[new start edit show update destroy create upvote downvote]
   before_action :set_test, only: %i[show edit update destroy start upvote downvote]
   
   authorize_resource
