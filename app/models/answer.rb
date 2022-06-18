@@ -6,6 +6,7 @@ class Answer < ApplicationRecord
   validates :answer, presence: true
   validate :validate_answer_count, on: :create
   scope :correct, -> { where(correct: true) }
+  scope :author, ->(user) { with_role(:author, user).pluck(:id) }
 
   private
 

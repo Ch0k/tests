@@ -24,7 +24,7 @@ class Ability
     can :manage, Question, id: Question.with_role(:author, user).pluck(:id)
     can :manage, Answer, id: Answer.with_role(:author, user).pluck(:id)
     can :start, Test
-    can :manage, Test, id: Test.with_role(:author, user).pluck(:id)
+    can :manage, Test, id: Test.author(user)
     cannot :read, User
     cannot :manage, User
   end

@@ -16,4 +16,5 @@ class Test < ApplicationRecord
   scope :list_category, lambda { |category|
                           joins('JOIN categories ON tests.category_id = categories.id').where('categories.title = ? ', category)
                         }
+  scope :author, ->(user) { with_role(:author, user).pluck(:id) }
 end
