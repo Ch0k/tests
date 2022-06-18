@@ -21,8 +21,8 @@ class Ability
 
   def reader_abiltiy(user)
     guest_ability
-    can :manage, Question, id: Question.with_role(:author, user).pluck(:id)
-    can :manage, Answer, id: Answer.with_role(:author, user).pluck(:id)
+    can :manage, Question, id: Question.author(user)
+    can :manage, Answer, id: Answer.author(user)
     can :start, Test
     can :manage, Test, id: Test.author(user)
     cannot :read, User
