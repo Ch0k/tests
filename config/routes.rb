@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
   end
   resources :tests do 
+    resources :comments, only: [:create, :index]
     member do
       post :start
     end

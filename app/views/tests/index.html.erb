@@ -19,6 +19,7 @@
         <td><%= test.level %></td>
         <td><%= User.with_role(:author, test).pluck(:email) %></td>
         <td><%= button_to 'Start', start_test_path(test), class: 'btn btn-primary' %>
+        <td><%= link_to 'Comments', test_comments_path(test), class: 'btn btn-primary' %>
         <%# if user && user.has_role?(:reader)%>
         <% if user_signed_in? %>
           <td><%= link_to 'Show', test %></td>

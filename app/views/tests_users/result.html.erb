@@ -9,4 +9,28 @@
   <p>Correct answers <%= @tests_users.correct_question %> of <%= @tests_users.test.questions.count %>!
   <br>
   <%= link_to 'Tests', tests_path, class: "btn btn_primary" %>
+
+  <%= form_with(model: [@test, @comment], local: true) do |form| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+        <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :body %>
+      <%= form.text_field :body, class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
 </div>
