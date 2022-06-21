@@ -33,6 +33,7 @@ gem 'devise'
 gem 'jquery-rails'
 gem "rolify"
 gem 'cancancan'
+gem 'pg'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
