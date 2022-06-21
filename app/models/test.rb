@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Test < ApplicationRecord
+  acts_as_votable
   resourcify
   has_many :questions, dependent: :destroy
   belongs_to :category

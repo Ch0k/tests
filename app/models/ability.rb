@@ -24,6 +24,8 @@ class Ability
     can :manage, Question, id: Question.author(user)
     can :manage, Answer, id: Answer.author(user)
     can :start, Test
+    can :upvote, Test
+    can :downvote, Test
     can :manage, Test, id: Test.author(user)
     cannot :read, User
     cannot :manage, User

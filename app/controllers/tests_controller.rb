@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TestsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new start edit show update destroy create]
-  before_action :set_test, only: %i[show edit update destroy start]
+  before_action :authenticate_user!, only: %i[new start edit show update destroy create upvote downvote]
+  before_action :set_test, only: %i[show edit update destroy start upvote downvote]
   
   authorize_resource
 
@@ -64,6 +64,24 @@ class TestsController < ApplicationController
     else
       redirect_to root_path, notice: 'Тест не возможно начать. У теста нет вопросов'
     end
+  end
+
+  def upvote
+    if current_user.voted_up_on? @test
+      @test.unvote_by current_user
+    else
+      @test.upvote_by current_user
+    end
+    render "vote.js.erb"
+  end
+
+  def downvote
+    if current_user.voted_down_on? @test
+      @test.unvote_by current_user
+    else
+      @test.downvote_by current_user
+    end
+    render "vote.js.erb"
   end
 
   private

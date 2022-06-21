@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :index]
     member do
       post :start
+      patch :upvote
+      patch :downvote
     end
     resources :questions, shallow: true do
       resources :answers, shallow: true

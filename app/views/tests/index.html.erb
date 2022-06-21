@@ -7,6 +7,9 @@
       <th>Category</th>
       <th>Level</th>
       <th>Author</th>
+      <th>Upvote</th>
+      <th>Cached score</th>
+      <th>Downvote</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -18,8 +21,12 @@
         <td><%= test.category.title %></td>
         <td><%= test.level %></td>
         <td><%= User.with_role(:author, test).pluck(:email) %></td>
+        <td><%= render "tests/upvote_link", test: test %></td>
+        <td><%= render "tests/votes_score", test: test %></td>
+        <td><%= render "tests/downvote_link", test: test %></td>
         <td><%= button_to 'Start', start_test_path(test), class: 'btn btn-primary' %>
         <td><%= link_to 'Comments', test_comments_path(test), class: 'btn btn-primary' %>
+        
         <%# if user && user.has_role?(:reader)%>
         <% if user_signed_in? %>
           <td><%= link_to 'Show', test %></td>
