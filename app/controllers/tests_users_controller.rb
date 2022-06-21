@@ -9,11 +9,17 @@ class TestsUsersController < ApplicationController
   def update
     @tests_users.accept!(params[:answer_ids])
     if @tests_users.complited?
-      #TestsMailer.complited_test(@user_test).deliver_now
+      # TestsMailer.complited_test(@user_test).deliver_now
       redirect_to result_tests_user_path(@tests_users)
     else
       render :show
     end
+  end
+
+  def result
+    @tests_users = TestsUser.find(params[:id])
+    @test = @tests_users.test
+    @comment = Comment.new
   end
 
   private
