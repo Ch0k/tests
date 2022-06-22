@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
   create_table "comments", force: :cascade do |t|
     t.string "body", null: false
     t.string "commentable_type"
-    t.integer "commentable_id"
+    t.bigint "commentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  create_table "votes", force: :cascade do |t|
+  create_table "votes", id: :serial, force: :cascade do |t|
     t.string "votable_type"
     t.integer "votable_id"
     t.string "voter_type"
@@ -119,12 +119,11 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
-  
+
   add_foreign_key "answers", "questions"
   add_foreign_key "questions", "tests"
   add_foreign_key "tests", "categories"
   add_foreign_key "tests_users", "questions", column: "current_question_id"
   add_foreign_key "tests_users", "tests"
   add_foreign_key "tests_users", "users"
-
 end
