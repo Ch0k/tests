@@ -26,9 +26,10 @@ class Ability
     can :start, Test
     can :upvote, Test
     can :downvote, Test
+    can :favorite_tests, User, id: user.id
     can :manage, Test, id: Test.author(user)
-    cannot :read, User
-    cannot :manage, User
+    #cannot :read, User
+    #cannot :manage, User
   end
 
   def guest_ability
