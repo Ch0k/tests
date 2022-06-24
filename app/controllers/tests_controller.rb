@@ -7,7 +7,12 @@ class TestsController < ApplicationController
   authorize_resource
 
   def index
-    @tests = Test.all
+    if params.has_key?(:category)
+      category = Category.find_by(title: params[:category])
+      @tests = Test.where(category: category)
+    else
+      @tests = Test.all
+    end
   end
 
   def show

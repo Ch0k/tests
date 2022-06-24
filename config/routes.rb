@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  get 'favorites/update'
   devise_for :users
+  resources :favorites, only: [:update]
   resources :tests_users, only: %i[show update] do
     member do
       get :result
@@ -18,6 +20,10 @@ Rails.application.routes.draw do
     end
   end
   resources :categories
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [:index, :edit, :update] do
+    member do
+      get :favorite_tests
+    end
+  end
   root 'tests#index'
 end

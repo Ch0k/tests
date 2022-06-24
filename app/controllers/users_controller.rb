@@ -2,7 +2,8 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[edit update]
+  before_action :set_user, only: %i[edit update favorite_tests]
+  
   authorize_resource
 
   def index
@@ -22,6 +23,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def favorite_tests
+    @tests = @user.favorite_tests
   end
 
   private

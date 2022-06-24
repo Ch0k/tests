@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_18_201919) do
+ActiveRecord::Schema.define(version: 2022_06_24_102258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,22 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "badges", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "rule", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "badges_users", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "badge_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["badge_id"], name: "index_badges_users_on_badge_id"
+    t.index ["user_id"], name: "index_badges_users_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -33,10 +49,19 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
   create_table "comments", force: :cascade do |t|
     t.string "body", null: false
     t.string "commentable_type"
-    t.integer "commentable_id"
+    t.bigint "commentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "test_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_favorites_on_test_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -81,6 +106,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.bigint "current_question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "complited", default: false
     t.index ["current_question_id"], name: "index_tests_users_on_current_question_id"
     t.index ["test_id"], name: "index_tests_users_on_test_id"
     t.index ["user_id"], name: "index_tests_users_on_user_id"
@@ -106,7 +132,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  create_table "votes", force: :cascade do |t|
+  create_table "votes", id: :serial, force: :cascade do |t|
     t.string "votable_type"
     t.integer "votable_id"
     t.string "voter_type"
@@ -119,12 +145,15 @@ ActiveRecord::Schema.define(version: 2022_06_18_201919) do
     t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
-  
+
   add_foreign_key "answers", "questions"
+  add_foreign_key "badges_users", "badges"
+  add_foreign_key "badges_users", "users"
+  add_foreign_key "favorites", "tests"
+  add_foreign_key "favorites", "users"
   add_foreign_key "questions", "tests"
   add_foreign_key "tests", "categories"
   add_foreign_key "tests_users", "questions", column: "current_question_id"
   add_foreign_key "tests_users", "tests"
   add_foreign_key "tests_users", "users"
-
 end
