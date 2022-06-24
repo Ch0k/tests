@@ -9,7 +9,7 @@ class Test < ApplicationRecord
   has_many :tests_users, dependent: :destroy
   has_many :users, through: :tests_users
   has_many :comments, dependent: :destroy, as: :commentable
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :favorite_users, through: :favorites, source: :user
 
   validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

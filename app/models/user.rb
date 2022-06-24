@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   has_many :tests_users
   has_many :tests, through: :tests_users
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :favorite_tests, through: :favorites, source: :test
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
